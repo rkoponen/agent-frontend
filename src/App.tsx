@@ -394,7 +394,7 @@ function App() {
       <header className="bg-white border-b border-gray-200 p-4 shadow-sm">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-800">
-            Restaurant Agent Chat
+            Car Agent
           </h1>
           <div className="flex items-center gap-3">
             <button
@@ -593,8 +593,7 @@ function App() {
                     Start a conversation
                   </h2>
                   <p className="text-gray-500">
-                    Ask about our menu, make an order, or inquire about our
-                    restaurant
+                    Order food, find parking and plan your trips
                   </p>
                 </div>
               ) : (
@@ -657,7 +656,7 @@ function App() {
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask about our menu, place an order, or ask any questions..."
+                  placeholder=""
                   disabled={isLoading}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
