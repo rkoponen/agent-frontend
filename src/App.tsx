@@ -112,8 +112,8 @@ function App() {
     window.speechSynthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    utterance.rate = 1.05;
+    utterance.pitch = 1.1;
     utterance.volume = 1.0;
 
     utterance.onstart = () => {
@@ -389,36 +389,52 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 p-4 shadow-sm">
-        <div className="max-w-4xl mx-auto flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-800">
-            Car Agent
-          </h1>
+    <div className="flex h-screen bg-gray-50">
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1">
+        {/* Header */}
+        <header className="bg-white border-b border-gray-200 p-4 shadow-sm">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <h1 className="text-2xl font-bold text-gray-800">
+              Car Agent
+            </h1>
           <div className="flex items-center gap-3">
-            <button
-              onClick={() => {
-                const newMode = !voiceMode;
-                setVoiceMode(newMode);
-                voiceModeRef.current = newMode;
-                shouldContinueListeningRef.current = false;
-                if (newMode) {
-                  // Switching to voice mode - clear text messages
-                  setMessages([]);
-                } else {
-                  // Switching to text mode - stop all voice activities
-                  stopConversation();
-                }
-              }}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                voiceMode
-                  ? "bg-green-500 text-white hover:bg-green-600"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
-            >
-              {voiceMode ? "🎤 Voice Mode" : "💬 Text Mode"}
-            </button>
+            <div className="flex bg-gray-100 rounded-lg p-1 gap-1">
+              <button
+                onClick={() => {
+                  if (voiceMode) {
+                    setVoiceMode(false);
+                    voiceModeRef.current = false;
+                    shouldContinueListeningRef.current = false;
+                    stopConversation();
+                  }
+                }}
+                className={`px-6 py-2.5 text-sm font-semibold rounded-md transition-all ${
+                  !voiceMode
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                Chat Mode
+              </button>
+              <button
+                onClick={() => {
+                  if (!voiceMode) {
+                    setVoiceMode(true);
+                    voiceModeRef.current = true;
+                    shouldContinueListeningRef.current = false;
+                    setMessages([]);
+                  }
+                }}
+                className={`px-6 py-2.5 text-sm font-semibold rounded-md transition-all ${
+                  voiceMode
+                    ? "bg-white text-gray-900 shadow-sm"
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+               Voice Mode
+              </button>
+            </div>
             {!voiceMode && (
               <button
                 onClick={clearChat}
@@ -551,7 +567,7 @@ function App() {
                 ? "Listening to the agent's response"
                 : isLoading
                 ? "Processing your request"
-                : "Click 'Start Talking' and ask about our menu or place an order"}
+                : "Click 'Start Talking'"}
             </p>
 
             {!(
@@ -672,6 +688,56 @@ function App() {
           </footer>
         </>
       )}
+      </div>
+
+      {/* Info Sidebar */}
+      <aside className="w-80 bg-white border-l border-gray-200 p-6 overflow-y-auto">
+        <h2 className="text-lg font-bold text-gray-800 mb-4">Try asking...</h2>
+        
+        <div className="space-y-3">
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+              "I'm hungry"
+            </p>
+          </div>
+
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+              "I want a burger"
+            </p>
+          </div>
+
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+               "Find me parking near my destination"
+            </p>
+          </div>
+
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+              "Plan a trip to Helsinki"
+            </p>
+          </div>
+
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+              "I need a tyre change"
+            </p>
+          </div>
+
+          <div className="pb-3 border-b border-gray-200">
+            <p className="text-sm text-gray-700">
+              "What's on my calendar?"
+            </p>
+          </div>
+
+          <div className="pb-3">
+            <p className="text-sm text-gray-700">
+              "Add a meeting tomorrow at 2 PM"
+            </p>
+          </div>
+        </div>
+      </aside>
     </div>
   );
 }
